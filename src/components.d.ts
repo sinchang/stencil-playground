@@ -8,6 +8,10 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface MyComponent {
         /**
+          * The age
+         */
+        "age": string;
+        /**
           * The first name
          */
         "first": string;
@@ -19,6 +23,7 @@ export namespace Components {
           * The middle name
          */
         "middle": string;
+        "myMethod3": () => Promise<void>;
     }
 }
 declare global {
@@ -34,6 +39,10 @@ declare global {
 }
 declare namespace LocalJSX {
     interface MyComponent {
+        /**
+          * The age
+         */
+        "age": string;
         /**
           * The first name
          */

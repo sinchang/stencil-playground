@@ -1,4 +1,4 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Prop, h, Listen, Method } from '@stencil/core';
 import { format } from '../../utils/utils';
 
 @Component({
@@ -22,11 +22,40 @@ export class MyComponent {
    */
   @Prop() last: string;
 
+  /**
+   * The age
+   */
+  @Prop() age!: string;
+
   private getText(): string {
     return format(this.first, this.middle, this.last);
   }
 
+  @Listen('keydown', {
+    passive: true,
+  })
+  handleKeyDown(ev: KeyboardEvent) {
+    console.log(ev.key);
+    if (ev.key === 'ArrowDown') {
+      console.log('down arrow pressed');
+    }
+  }
+
+  // VALID: even if it returns nothing, it needs to be async
+  @Method()
+  async myMethod3() {
+    console.log(42);
+  }
+
   render() {
-    return <div>Hello, World! I'm {this.getText()}</div>;
+    return (
+      <div>
+        Hello, World! I'm {this.getText()}
+        <div>
+          <input type="text" />
+        </div>
+        <p class="tip">This is a tip</p>
+      </div>
+    );
   }
 }
