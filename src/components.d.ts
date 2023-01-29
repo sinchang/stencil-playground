@@ -6,6 +6,15 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface IhrButton {
+        "color": 'primary' | 'accent' | 'light';
+        "disabled": boolean;
+        "label": string;
+        "shape": 'square' | 'round';
+        "size": 'small' | 'default' | 'large';
+        "type": 'button' | 'reset' | 'submit';
+        "variant": 'outlined' | 'contained';
+    }
     interface MyComponent {
         /**
           * The age
@@ -26,7 +35,17 @@ export namespace Components {
         "myMethod3": () => Promise<void>;
     }
 }
+export interface IhrButtonCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIhrButtonElement;
+}
 declare global {
+    interface HTMLIhrButtonElement extends Components.IhrButton, HTMLStencilElement {
+    }
+    var HTMLIhrButtonElement: {
+        prototype: HTMLIhrButtonElement;
+        new (): HTMLIhrButtonElement;
+    };
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
     }
     var HTMLMyComponentElement: {
@@ -34,10 +53,21 @@ declare global {
         new (): HTMLMyComponentElement;
     };
     interface HTMLElementTagNameMap {
+        "ihr-button": HTMLIhrButtonElement;
         "my-component": HTMLMyComponentElement;
     }
 }
 declare namespace LocalJSX {
+    interface IhrButton {
+        "color"?: 'primary' | 'accent' | 'light';
+        "disabled"?: boolean;
+        "label"?: string;
+        "onClickEvent"?: (event: IhrButtonCustomEvent<any>) => void;
+        "shape"?: 'square' | 'round';
+        "size"?: 'small' | 'default' | 'large';
+        "type"?: 'button' | 'reset' | 'submit';
+        "variant"?: 'outlined' | 'contained';
+    }
     interface MyComponent {
         /**
           * The age
@@ -57,6 +87,7 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface IntrinsicElements {
+        "ihr-button": IhrButton;
         "my-component": MyComponent;
     }
 }
@@ -64,6 +95,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "ihr-button": LocalJSX.IhrButton & JSXBase.HTMLAttributes<HTMLIhrButtonElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
         }
     }

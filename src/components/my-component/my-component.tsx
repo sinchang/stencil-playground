@@ -1,5 +1,6 @@
 import { Component, Prop, h, Listen, Method } from '@stencil/core';
 import { format } from '../../utils/utils';
+import '../ihr-button/ihr-button';
 
 @Component({
   tag: 'my-component',
@@ -35,7 +36,6 @@ export class MyComponent {
     passive: true,
   })
   handleKeyDown(ev: KeyboardEvent) {
-    console.log(ev.key);
     if (ev.key === 'ArrowDown') {
       console.log('down arrow pressed');
     }
@@ -47,6 +47,10 @@ export class MyComponent {
     console.log(42);
   }
 
+  private clickHandler(event: UIEvent) {
+    console.log('Received the custom click event: ', event.detail);
+  }
+
   render() {
     return (
       <div>
@@ -54,6 +58,7 @@ export class MyComponent {
         <div>
           <input type="text" />
         </div>
+        <ihr-button label="Click Me" variant="contained" color="primary" onClickEvent={this.clickHandler.bind(this)} />
         <p class="tip">This is a tip</p>
       </div>
     );
